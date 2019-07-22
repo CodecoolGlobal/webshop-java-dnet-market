@@ -22,7 +22,7 @@ public class Initializer implements ServletContextListener {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-        faszság
+
         //setting up a new supplier
         Supplier amazon = new Supplier("Amazon", "Digital content and services");
         supplierDataStore.add(amazon);
