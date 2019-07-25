@@ -7,7 +7,7 @@ import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.model.OrderedItems;
+import com.codecool.shop.model.BaseModel;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -17,49 +17,48 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import static java.lang.Integer.parseInt;
 
-@WebServlet(urlPatterns = {"/"})
-public class ProductController extends HttpServlet {
+@WebServlet(urlPatterns = {"/cart"})
+public class ShoppingCart extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         OrderDao orderDataStore = OrderDaoMem.getInstance();
-
-        String productToCart = req.getParameter("product");
-        if(productToCart != null){
-            int productID = parseInt(productToCart);
-            orderDataStore.add(new OrderedItems(productDataStore.find(productID)));
-        }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("category", productCategoryDataStore.find(1));
-        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        context.setVariable("orderedItems", orderDataStore.getAll());
+        String id = req.getParameter("id");
+        String plus = req.getParameter("plus");
+        if(plus != null){
+            orderDataStore.find(Integer.valueOf(id)).increaseAmount();
+        }
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
         // params.put("category", productCategoryDataStore.find(1));
         // params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
         // context.setVariables(params);
-        engine.process("product/index.html", context, resp.getWriter());
+        engine.process("product/cart.html", context, resp.getWriter());
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
         OrderDao orderDataStore = OrderDaoMem.getInstance();
-
+        String action = req.getParameter("action");
         String id = req.getParameter("id");
-        orderDataStore.add(new OrderedItems(productDataStore.find(Integer.valueOf(id))));
 
-        int numOfProducts = orderDataStore.getNumberOfItems();
-
-        resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write(Integer.toString(numOfProducts));
+        switch (action) {
+            case "plus":
+                orderDataStore.find(Integer.valueOf(id)).increaseAmount();
+                break;
+            case "minus":
+                orderDataStore.find(Integer.valueOf(id)).decreaseAmount();
+                break;
+        }
     }
+
 }
