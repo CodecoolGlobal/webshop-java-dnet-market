@@ -35,10 +35,10 @@
         </div>
 
         <div class="right-wrapper">
-            <button class="remove" th:attr="data-id=${orderedItem.id}"><i class="fas fa-trash-alt"></i></button><br>
-            <button class="plus" th:href="'/?plus=' + ${orderedItem.getProduct().getId()}"><i class="fas fa-plus-square"></i></button>
+            <a class="remove" th:attr="data-id=${orderedItem.id}"><i class="fas fa-trash-alt"></i></a><br>
+            <button type="submit" class="plus" th:value="${orderedItem.setAmount(orderedItem.getAmount()+1)}"><i class="fas fa-plus-square"></i></button>
             <div class="amount" th:text="${orderedItem.getAmount()}">5</div>
-            <button class="minus" th:attr="data-id=${orderedItem.id}"><i class="fas fa-minus-square"></i></button>
+            <a class="minus" th:href="${orderedItem.decreaseAmount()}"><i class="fas fa-minus-square"></i></a>
         </div>
     </div>
     </div>

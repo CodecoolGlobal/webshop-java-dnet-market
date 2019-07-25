@@ -58,6 +58,11 @@
     margin: 0 0 11px;
 }
 
+
+.navbar {
+    background-color: #333;
+}
+
 /* Dropdown Button */
 .dropbtn {
     background-color: #4CAF50;
@@ -100,7 +105,3 @@
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
-
-.homepage a {
-    text-decoration: none;
-}
