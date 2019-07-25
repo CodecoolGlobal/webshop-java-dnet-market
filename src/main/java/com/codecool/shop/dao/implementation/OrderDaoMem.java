@@ -27,6 +27,14 @@ public class OrderDaoMem implements OrderDao {
         return instance;
     }
 
+    public float getPriceForAll() {
+        int summ = 0;
+        for (OrderedItems orderedItem: data) {
+            summ += orderedItem.getProduct().getFloatPrice();
+        }
+        return summ;
+    }
+
     @Override
     public void emptyCart() {
         this.data.clear();
@@ -73,4 +81,6 @@ public class OrderDaoMem implements OrderDao {
     public List<Product> getBy(ProductCategory productCategory) {
         return null;
     }
+
+
 }
