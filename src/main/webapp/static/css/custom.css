@@ -99,3 +99,8 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+
+.homepage a {
+    text-decoration: none;
+}

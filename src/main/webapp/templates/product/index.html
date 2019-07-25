@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="author" content="Codecool" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
     <title>Codecool Shop</title>
 
@@ -33,18 +33,21 @@
 <body>
 
 <div class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
+    <h1><a class="homepage" href="index.html">Codecool Shop</a></h1>
 </div>
 <a class="btn btn-success" href="/cart">Shopping cart</a>
 
 <div class="container">
-    <div class="card" >
-        <div class="dropdown">
-            <button class="dropbtn">Categories</button>
-            <div class="dropdown-content">
-                <a th:each="category,IterStat : ${categories}" th:href="'/?category=' + ${category.name}" th:text="${category.name}">Category Title</a>
-
-            </div>
+    <div class="dropdown">
+        <button class="dropbtn">Filter by...</button>
+        <div class="dropdown-content">
+            <strong>Categories</strong>
+            <a th:each="category,IterStat : ${categories}" th:href="'/?categoryId=' + ${category.getId()}"
+               th:text="${category.name}">Category Title</a>
+            <strong>Suppliers</strong>
+            <a th:each="supplier,IterStat : ${suppliers}"
+               th:href="'/?supplierId=' + ${supplier.getId()}"
+               th:text="${supplier.name}">Supplier</a>
         </div>
 
     </div>
