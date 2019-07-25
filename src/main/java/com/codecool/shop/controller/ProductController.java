@@ -2,9 +2,11 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.ProductCategory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -18,6 +20,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.lang.Integer.parseInt;
+
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
@@ -25,19 +29,23 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        SupplierDao supplierDaoStore = SupplierDaoMem.getInstance();
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("categories", productCategoryDataStore.getAll());
         context.setVariable("products", productDataStore.getAll());
+        context.setVariable("suppliers", supplierDaoStore.getAll());
 
 
-        if (req.getParameter("category") != null && req.getParameter("category").equals("Tablet")) {
-            context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        if (req.getParameter("categoryId") != null) {
+            context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(parseInt(req.getParameter("categoryId")))));
         }
-        else if(req.getParameter("category") != null && req.getParameter("category").equals("Laptop")) {
-            context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(2)));
+
+        if(req.getParameter("supplierId") != null) {
+            context.setVariable("products", productDataStore.getBy(supplierDaoStore.find(parseInt(req.getParameter("supplierId")))));
         }
+
         //context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
