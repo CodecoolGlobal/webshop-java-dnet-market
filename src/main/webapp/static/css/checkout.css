@@ -1,0 +1,10 @@
+/*.container {*/
+/*    max-width: 960px;*/
+/*}*/
+
+.lh-condensed { line-height: 1.25; }
+
+#outer-box {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
