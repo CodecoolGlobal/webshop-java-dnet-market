@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Chela+One" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/header.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/cart.css" />
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="/static/js/index.js" defer></script>
+    <script src="/static/js/cart.js" defer></script>
+</head>
+
+<body>
+
+<div class="jumbotron text-center">
+    <h1>Shopping Cart</h1>
+</div>
+
+<div class="container">
+    <div id="products" class="row">
+    <div class="col col-sm-12 col-md-6 col-lg-4" th:each="orderedItem,iterStat : ${orderedItems}">
+
+        <img  src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${orderedItem.getProduct().getId()} + '.jpg'" alt="" />
+
+        <div class="card-header">
+            <div class="name" th:text="${orderedItem.getProduct().getName()}">Name</div>
+        </div>
+
+        <div class="right-wrapper">
+            <button class="remove" th:attr="data-id=${orderedItem.id}"><i class="fas fa-trash-alt"></i></button><br>
+            <button class="plus" th:href="'/?plus=' + ${orderedItem.getProduct().getId()}"><i class="fas fa-plus-square"></i></button>
+            <div class="amount" th:text="${orderedItem.getAmount()}">5</div>
+            <button class="minus" th:attr="data-id=${orderedItem.id}"><i class="fas fa-minus-square"></i></button>
+        </div>
+    </div>
+    </div>
+
+    <div class="total-price">
+        <a href="/"><i class="fas fa-angle-double-left"></i> Back</a>
+    </div>
+
+</div>
+
+
+
+<!--<div th:replace="footer.html :: copy"></div>-->
+
+</body>
+</html>

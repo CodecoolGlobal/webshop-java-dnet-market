@@ -1,11 +1,14 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.model.OrderedItems;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.ProductCategory;
 import org.thymeleaf.TemplateEngine;
@@ -30,6 +33,13 @@ public class ProductController extends HttpServlet {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDaoStore = SupplierDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoMem.getInstance();
+
+        String productToCart = req.getParameter("product");
+        if(productToCart != null){
+            int productID = parseInt(productToCart);
+            orderDataStore.add(new OrderedItems(productDataStore.find(productID)));
+        }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -58,4 +68,17 @@ public class ProductController extends HttpServlet {
 
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoMem.getInstance();
+
+        String id = req.getParameter("id");
+        orderDataStore.add(new OrderedItems(productDataStore.find(Integer.valueOf(id))));
+
+        int numOfProducts = orderDataStore.getNumberOfItems();
+
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(Integer.toString(numOfProducts));
+    }
 }
