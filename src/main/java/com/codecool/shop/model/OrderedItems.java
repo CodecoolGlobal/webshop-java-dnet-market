@@ -10,7 +10,7 @@ public class OrderedItems {
     private int amount;
 
     public OrderedItems(Product product) {
-        this.amount = 0;
+        this.amount = 1;
         this.product = product;
     }
 

@@ -1,22 +1,43 @@
+
+
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="author" content="Codecool" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
     <title>Shopping Cart</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Chela+One" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/header.css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/cart.css" />
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="/static/js/index.js" defer></script>
-    <script src="/static/js/cart.js" defer></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"
+          id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <script src="https://kit.fontawesome.com/04fa96a789.js"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
 </head>
+<!------ Include the above in your HEAD tag ---------->
 
 <body>
 
@@ -24,34 +45,69 @@
     <h1>Shopping Cart</h1>
 </div>
 
+
 <div class="container">
-    <div id="products" class="row">
-    <div class="col col-sm-12 col-md-6 col-lg-4" th:each="orderedItem,iterStat : ${orderedItems}">
-
-        <img  src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${orderedItem.getProduct().getId()} + '.jpg'" alt="" />
-
-        <div class="card-header">
-            <div class="name" th:text="${orderedItem.getProduct().getName()}">Name</div>
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <table class="table table-hover" th:each="orderedItem,iterStat : ${orderedItems.getAll()}">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th class="text-center">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="col-sm-8 col-md-6">
+                        <div class="media">
+                            <img class="media-object" src="http://placehold.it/400x250/000/fff"
+                                 th:attr="src='/static/img/product_' + ${orderedItem.getProduct().getId()} + '.jpg'"
+                                 style="width: 72px; height: 72px;"> </a>
+                            <div class="media-body">
+                                <h4 class="media-heading" th:text="${orderedItem.getProduct().getName()}">Product
+                                    name</h4>
+                                <h5 class="media-heading"
+                                    th:text="by + ' ' + ${orderedItem.getProduct().getSupplier().getName()}"></h5>
+                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col-sm-1 col-md-1" style="text-align: center">
+                        <div class="right-wrapper">
+                            <a class="plus" th:href="'/cart?action=plus&id=' + ${orderedItem.id}"><i class="fas fa-plus-square"></i></a>
+                            <div class="amount" th:text="${orderedItem.getAmount()}">5</div>
+                            <a class="minus" th:href="'/cart?action=minus&id=' + ${orderedItem.id}"><i
+                                    class="fas fa-minus-square"></i></a>
+                        </div>
+                    </td>
+                    <td class="col-sm-1 col-md-1 text-center"><strong
+                            th:text="${orderedItem.getProduct().getPrice()}"></strong></td>
+                    <div class="lead" th:text="${#numbers.formatDecimal(orderedItem.getProduct().getDefaultPrice() * orderedItem.getAmount(), 0, 'COMMA', 2, 'POINT')} + ' USD'"></div>
+                    <td class="col-sm-1 col-md-1">
+                        <button type="button" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span> Remove
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div><h3 >Total</h3>
+                <h3 class="text-right"><strong th:text="${orderedItems.getPriceForAll()} + ' USD'" >$31.53</strong></h3>
+            </div>
+            <div class="cart-button">
+                <a href="/" class="btn btn-success">
+                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                    Continue Shopping
+                </a>
+            </div>
+            <div class="cart-button">
+                <a href="/checkout" class="btn btn-success">
+                    Checkout
+                </a>
+            </div>
         </div>
-
-        <div class="right-wrapper">
-            <a class="remove" th:attr="data-id=${orderedItem.id}"><i class="fas fa-trash-alt"></i></a><br>
-            <button type="submit" class="plus" th:value="${orderedItem.setAmount(orderedItem.getAmount()+1)}"><i class="fas fa-plus-square"></i></button>
-            <div class="amount" th:text="${orderedItem.getAmount()}">5</div>
-            <a class="minus" th:href="${orderedItem.decreaseAmount()}"><i class="fas fa-minus-square"></i></a>
-        </div>
     </div>
-    </div>
-
-    <div class="total-price">
-        <a href="/"><i class="fas fa-angle-double-left"></i> Back</a>
-    </div>
-
 </div>
-
-
-
-<!--<div th:replace="footer.html :: copy"></div>-->
-
 </body>
-</html>
+<div th:replace="footer.html :: copy"></div>
