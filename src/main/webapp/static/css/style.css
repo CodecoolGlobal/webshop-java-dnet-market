@@ -1,0 +1,44 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: white;
+  color: #666666;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  width: 100%;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 8rem;
+}
+.navbar h1 {
+  font-size: 2rem;
+}
+.navbar h1 a {
+  color: #D97B60;
+}
+.navbar .fa-bars {
+  font-size: 3rem;
+  color: #D97B60;
+}
+
+/*# sourceMappingURL=style.css.map */
