@@ -5,9 +5,9 @@ import java.lang.reflect.Field;
 
 public class OrderedItems {
 
-    protected int id;
+    private int id;
     protected Product product;
-    protected int amount;
+    private int amount;
 
     public OrderedItems(Product product) {
         this.amount = 1;
@@ -35,7 +35,7 @@ public class OrderedItems {
     }
 
     public void increaseAmount(){
-        amount++;
+            amount++;
     }
 
     public void decreaseAmount(){

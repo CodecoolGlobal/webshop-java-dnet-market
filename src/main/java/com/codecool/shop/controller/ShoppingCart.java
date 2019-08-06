@@ -8,6 +8,7 @@ import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.model.BaseModel;
+import com.codecool.shop.model.OrderedItems;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static java.lang.Integer.parseInt;
@@ -28,15 +30,24 @@ public class ShoppingCart extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OrderDao orderDataStore = OrderDaoMem.getInstance();
+        List<OrderedItems> orderedItems = OrderDaoMem.getInstance().getAll();
+        OrderDaoMem orderedItemDataStore = OrderDaoMem.getInstance();
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("orderedItems", orderDataStore.getAll());
+        context.setVariable("orderedItems", orderedItemDataStore);
         String id = req.getParameter("id");
-        String plus = req.getParameter("plus");
-        if(plus != null){
-            orderDataStore.find(Integer.valueOf(id)).increaseAmount();
+        String action = req.getParameter("action");
+        if (action != null && id != null) {
+            switch (action) {
+                case "plus":
+                    orderedItemDataStore.find(Integer.valueOf(id)).increaseAmount();
+                    break;
+
+                case "minus":
+                    orderedItemDataStore.find(Integer.valueOf(id)).decreaseAmount();
+                    break;
+            }
         }
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
@@ -45,20 +56,6 @@ public class ShoppingCart extends HttpServlet {
         // context.setVariables(params);
         engine.process("product/cart.html", context, resp.getWriter());
     }
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OrderDao orderDataStore = OrderDaoMem.getInstance();
-        String action = req.getParameter("action");
-        String id = req.getParameter("id");
 
-        switch (action) {
-            case "plus":
-                orderDataStore.find(Integer.valueOf(id)).increaseAmount();
-                break;
-            case "minus":
-                orderDataStore.find(Integer.valueOf(id)).decreaseAmount();
-                break;
-        }
-    }
 
 }
