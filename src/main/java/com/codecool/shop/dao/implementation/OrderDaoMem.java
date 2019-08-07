@@ -93,5 +93,4 @@ public class OrderDaoMem extends Database implements OrderDao {
         Database.executeQuery("INSERT INTO orderdao VALUES('pista', 69);");
     }
 **/
-
 }
