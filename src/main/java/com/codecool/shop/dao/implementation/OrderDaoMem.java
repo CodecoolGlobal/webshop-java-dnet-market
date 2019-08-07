@@ -1,6 +1,7 @@
 package com.codecool.shop.dao.implementation;
 
 
+import com.codecool.shop.dao.Database;
 import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.model.OrderedItems;
 import com.codecool.shop.model.Product;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.sql.* ;  // for standard JDBC programs
 import java.math.* ; // for BigDecimal and BigInteger support
 
-public class OrderDaoMem implements OrderDao {
+public class OrderDaoMem extends Database implements OrderDao {
 
     private List<OrderedItems> data = new ArrayList<>();
     private static OrderDaoMem instance = null;
@@ -56,6 +57,7 @@ public class OrderDaoMem implements OrderDao {
         }
         orderedItems.setId(data.size() + 1);
         data.add(orderedItems);
+
     }
 
 
@@ -85,5 +87,10 @@ public class OrderDaoMem implements OrderDao {
         return null;
     }
 
-
+    //ez csak egy teszt ami megmutatja hogyan lehet használni az executeQuery method-omoat
+    /**
+    public static void main(String[] args){
+        Database.executeQuery("INSERT INTO orderdao VALUES('pista', 69);");
+    }
+**/
 }

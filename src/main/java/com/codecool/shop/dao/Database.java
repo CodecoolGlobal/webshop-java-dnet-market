@@ -9,10 +9,15 @@ public class Database {
     //  Database credentials
     static final String USER = "rebak16";
     static final String PASS = "Balazs10";
+    static Connection conn;
+    static Statement stmt;
 
-    public static void main(String[] args) {
-        Connection conn = null;
-        Statement stmt = null;
+    public Database(){
+        conn = null;
+        stmt = null;
+    }
+
+    public static void executeQuery(String query){
         try{
             //STEP 2: Register JDBC driver
 
@@ -23,22 +28,9 @@ public class Database {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = ((Connection) conn).createStatement();
-            String sql;
-            sql = "SELECT name, defaultprice FROM orderdao";
-            ResultSet rs = stmt.executeQuery(sql);
+            int rs = stmt.executeUpdate(query);
 
-            //STEP 5: Extract data from result set
-            while(rs.next()){
-                //Retrieve by column name
-                String name  = rs.getString("name");
-                Float defaultprice = rs.getFloat("defaultprice");
-
-                //Display values
-                System.out.print("Name: " + name);
-                System.out.print(", Default price: " + defaultprice);
-            }
             //STEP 6: Clean-up environment
-            rs.close();
             stmt.close();
             conn.close();
         }catch(SQLException se){
@@ -61,6 +53,6 @@ public class Database {
                 se.printStackTrace();
             }//end finally try
         }//end try
-        System.out.println("Goodbye!");
-    }//end main
-}//end FirstExample
+
+    }
+}
