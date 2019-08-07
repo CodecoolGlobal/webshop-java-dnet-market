@@ -11,17 +11,25 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
 
     private List<ProductCategory> data = new ArrayList<>();
     private static ProductCategoryDaoMem instance = null;
+    private String connectionConfigPath = "src/main/resources/connection.properties";
+
 
     /* A private Constructor prevents any other class from instantiating.
      */
-    protected ProductCategoryDaoMem() {
-    }
+
 
     public static ProductCategoryDaoMem getInstance() {
         if (instance == null) {
             instance = new ProductCategoryDaoMem();
         }
         return instance;
+    }
+
+    protected ProductCategoryDaoMem(String connectionConfigPath) {
+        this.connectionConfigPath = connectionConfigPath;
+    }
+
+    public ProductCategoryDaoMem() {
     }
 
     @Override
