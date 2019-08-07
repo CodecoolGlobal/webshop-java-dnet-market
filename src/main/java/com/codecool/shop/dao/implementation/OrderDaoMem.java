@@ -10,6 +10,9 @@ import com.codecool.shop.model.Supplier;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.sql.* ;  // for standard JDBC programs
+import java.math.* ; // for BigDecimal and BigInteger support
+
 public class OrderDaoMem implements OrderDao {
 
     private List<OrderedItems> data = new ArrayList<>();
