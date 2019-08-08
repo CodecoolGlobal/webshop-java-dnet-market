@@ -170,6 +170,7 @@ main {
 
     &:hover {
       background: lighten($complementer-color, 15%);
+      color: $dark-color;
     }
 
   }
