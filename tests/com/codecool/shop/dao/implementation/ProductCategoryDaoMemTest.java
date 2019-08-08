@@ -42,9 +42,4 @@ class ProductCategoryDaoMemTest {
         assertEquals("Hardware", testDao.find(1).getDepartment());
     }
 
-    @Test
-    public void addWithoutName(){
-        ProductCategory productCategory = new ProductCategory("", "Hardware", "Good");
-        assertThrows(Exception.class, () -> testDao.add(productCategory));
-    }
 }

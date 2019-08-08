@@ -7,6 +7,7 @@ import java.util.*;
 
 public interface QueryHandler {
 
+
     String getConnectionConfigPath();
 
     default Connection getConnection() {
@@ -17,10 +18,10 @@ public interface QueryHandler {
             System.out.println(e.getMessage());
             e.printStackTrace(System.out);
         }
-        String db_name = connection_props.getProperty("db_name");
-        String db_url = connection_props.getProperty("db_url");
-        String db_user = connection_props.getProperty("db_user");
-        String db_password = connection_props.getProperty("db_password");
+        String db_name = connection_props.getProperty("codecoolshop");
+        String db_url = connection_props.getProperty("localhost:5432");
+        String db_user = connection_props.getProperty("rebak16");
+        String db_password = connection_props.getProperty("Balazs10");
         String db_address = "jdbc:postgresql://" + db_url + "/" + db_name;
 
         Connection connection = null;

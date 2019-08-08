@@ -1,7 +1,6 @@
 package com.codecool.shop.dao;
 
 import java.sql.*;
-import java.util.List;
 
 public class Database {
     // JDBC driver name and database URL
@@ -18,7 +17,7 @@ public class Database {
         stmt = null;
     }
 
-    public static void executeQuery(String query){
+    public static ResultSet executeQuery(String query){
         try{
             //STEP 2: Register JDBC driver
 
@@ -55,5 +54,6 @@ public class Database {
             }//end finally try
         }//end try
 
+        return null;
     }
 }

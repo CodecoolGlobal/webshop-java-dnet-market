@@ -1,13 +1,9 @@
 package com.codecool.shop.dao.implementation;
 
-import com.codecool.shop.dao.Database;
 import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 
-import java.math.BigDecimal;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -56,24 +52,36 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao, QueryHandler 
 
     @Override
     public ProductCategory find(int id) {
-        String query = "SELECT * FROM categories WHERE id=?;";
-        List<Object> parameters = new ArrayList<>();
-        parameters.add(id);
-        List<Map<String, Object>> resultList = executeSelectQuery(query, parameters);
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:postresql://localhost:5432/codecoolshop", "rebak16", "Balazs10");
+             PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM categories WHERE id=?;")) {
 
-        ProductCategory result = null;
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        if (resultList.size() == 1) {
-            for (Map<String, Object> resultSet : resultList) {
-                String name = resultSet.get("name").toString();
-                String description = resultSet.get("description").toString();
-                String department = resultSet.get("department").toString();
-                result = new ProductCategory(name, department, description);
-                result.setId(id);
+            while (resultSet.next()) {
+
+                int ID = resultSet.getInt("Id");
+                String name = resultSet.getString("Name");
+                String department = resultSet.getString("Department");
+                String description = resultSet.getString("Description");
+
+                ProductCategory productCategory = new ProductCategory(name, department, description);
+                productCategory.setId(ID);
+                productCategory.setName(name);
+                productCategory.setDepartment(department);
+                // Timestamp -> LocalDateTime
+                productCategory.setDescription(description);
+
+                System.out.println(productCategory);
             }
+
+        } catch (SQLException e) {
+            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return result;
+        return null;
     }
 
     @Override
@@ -118,22 +126,31 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao, QueryHandler 
 
     @Override
     public List<ProductCategory> getAll() {
-        String query = "SELECT * FROM categories;";
-        List<Map<String, Object>> resultList = executeSelectQuery(query);
+        List<ProductCategory> productCategories = new ArrayList<>();
+        try (Connection conn = getConnection()){
+             PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM categories;");
 
-        List<ProductCategory> results = new ArrayList<>();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        for (Map<String, Object> resultSet : resultList) {
-            String id = resultSet.get("id").toString();
-            String name = resultSet.get("name").toString();
-            String description = resultSet.get("description").toString();
-            String department = resultSet.get("department").toString();
-            ProductCategory temp = new ProductCategory(name, department, description);
-            temp.setId(Integer.parseInt(id));
-            results.add(temp);
+            while (resultSet.next()) {
+
+                int ID = resultSet.getInt("Id");
+                String name = resultSet.getString("Name");
+                String department = resultSet.getString("Department");
+                String description = resultSet.getString("Description");
+
+                ProductCategory productCategory = new ProductCategory(name, department, description);
+                productCategory.setId(ID);
+                productCategories.add(productCategory);
+
+            }
+
+        } catch (SQLException e) {
+            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        return results;
+        return productCategories;
     }
 
     @Override
