@@ -62,7 +62,7 @@ ALTER TABLE ONLY products
     ADD CONSTRAINT fk_supplier_id FOREIGN KEY (supplier_id) REFERENCES suppliers(id);
 
 ALTER TABLE ONLY products
-    ADD CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES products(id);
+    ADD CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES categories(id);
 
 ALTER TABLE ONLY cart
     ADD CONSTRAINT fk_ordered_product_id FOREIGN KEY (product_id) REFERENCES products(id);

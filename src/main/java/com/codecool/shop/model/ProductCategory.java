@@ -13,6 +13,15 @@ public class ProductCategory extends BaseModel {
         this.products = new ArrayList<>();
     }
 
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+
+    @Override
+    public String getDescription() {
+        return super.getDescription();
+    }
 
     public String getDepartment() {
         return department;

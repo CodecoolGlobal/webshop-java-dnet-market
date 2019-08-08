@@ -10,6 +10,10 @@ public interface ProductCategoryDao {
     ProductCategory find(int id);
     void remove(int id);
 
+    void removeAll();
+
+    Integer findIdByName(String name);
+
     List<ProductCategory> getAll();
 
 }

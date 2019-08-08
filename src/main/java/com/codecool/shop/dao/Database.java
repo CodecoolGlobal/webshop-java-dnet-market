@@ -1,6 +1,7 @@
 package com.codecool.shop.dao;
 
 import java.sql.*;
+import java.util.List;
 
 public class Database {
     // JDBC driver name and database URL
