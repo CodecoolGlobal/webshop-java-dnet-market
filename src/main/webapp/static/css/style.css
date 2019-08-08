@@ -15,6 +15,7 @@ body {
 
 a {
   text-decoration: none;
+  color: #dcdcdc;
 }
 
 ul {
@@ -74,9 +75,11 @@ main .max-width-slider {
 main .slider {
   margin: auto;
   display: flex;
+  align-items: center;
 }
 main .slider .left-button {
-  padding: 40px;
+  width: 80px;
+  height: 80px;
   background: url("/static/img/icons/Page-left.png") no-repeat center;
   transition: all 0.2s ease-in;
 }
@@ -99,12 +102,22 @@ main .slider .picture-background .pictures {
   z-index: 2;
 }
 main .slider .right-button {
-  padding: 40px;
+  width: 80px;
+  height: 80px;
   background: url("/static/img/icons/Page-right.png") no-repeat center;
   transition: all 0.2s ease-in;
 }
 main .slider .right-button:hover {
   background: url("/static/img/icons/hover_right.png") no-repeat center;
+}
+main #navbar-opened {
+  display: none;
+  right: 0;
+  z-index: 10;
+  width: 185px;
+  background-color: #55A279;
+  border-radius: 25px;
+  border: #222121 solid 1px;
 }
 
 .button-placement {
@@ -123,6 +136,7 @@ main .slider .right-button:hover {
   padding: 0.4rem 1.3rem;
   outline: none;
   transition: all 0.5s ease-in;
+  border-radius: 25px;
 }
 .button.button-browse {
   background: #55A279;

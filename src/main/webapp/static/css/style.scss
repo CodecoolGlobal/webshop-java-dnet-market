@@ -17,6 +17,7 @@ body {
 
 a {
   text-decoration: none;
+  color: $light-color;
 }
 
 ul {
@@ -87,9 +88,11 @@ main {
   .slider {
     margin: auto;
     display: flex;
+    align-items: center;
 
     .left-button {
-      padding: 40px;
+      width: 80px;
+      height: 80px;
       background: url('/static/img/icons/Page-left.png') no-repeat center;
       transition: all 0.2s ease-in;
 
@@ -118,7 +121,8 @@ main {
     }
 
     .right-button {
-      padding: 40px;
+      width: 80px;
+      height: 80px;
       background: url('/static/img/icons/Page-right.png') no-repeat center;
       transition: all 0.2s ease-in;
 
@@ -126,6 +130,16 @@ main {
           background: url('/static/img/icons/hover_right.png') no-repeat center;
         }
     }
+
+  }
+  #navbar-opened {
+    display: none;
+    right: 0;
+    z-index: 10;
+    width: 185px;
+    background-color: $complementer-color;
+    border-radius: 25px;
+    border: $dark-color solid 1px;
   }
 }
 
@@ -145,6 +159,7 @@ main {
   padding: 0.4rem 1.3rem;
   outline: none;
   transition: all 0.5s ease-in;
+  border-radius: 25px;
 
   &.button-browse {
     background: $complementer-color;

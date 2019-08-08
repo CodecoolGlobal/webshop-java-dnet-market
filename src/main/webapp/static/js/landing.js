@@ -1,7 +1,11 @@
 const leftButton = document.querySelector('.left-button');
 const rightButton = document.querySelector('.right-button');
-const pictures = document.querySelector('.picture-background');
+const picturesBackground = document.querySelector('.picture-background');
+const pictures = document.querySelector('.pictures');
 const slider = document.querySelector('.slider');
+
+const navBurger = document.querySelector('.fas.fa-bars');
+const navBarOpened = document.querySelector('#navbar-opened');
 
 
 const picturesObject = {};
@@ -31,7 +35,7 @@ function leftClickListener() {
 
 function rightClickListener() {
     picturesObject['active']++;
-    if (picturesObject['active'] === Object.keys(picturesObject).length -1) {
+    if (picturesObject['active'] === Object.keys(picturesObject).length) {
         picturesObject['active'] = 1;
     }
 
@@ -40,23 +44,63 @@ function rightClickListener() {
 
 
 function picturesMouseOverListener() {
-    pictures.setAttribute('data-width','widened');
-    pictures.style.width = "1000px";
+    picturesBackground.setAttribute('data-width','widened');
+    picturesBackground.style.width = "1000px";
 }
 
 function sliderOutListener() {
-    pictures.setAttribute('data-width','normal');
-    pictures.style.width = "650px";
+    picturesBackground.setAttribute('data-width','normal');
+    picturesBackground.style.width = "650px";
 }
 
 
-pictures.addEventListener("mouseover", picturesMouseOverListener);
+function navBurgerOpen() {
+    if (navBarOpened.getAttribute("data-visibility") === "false") {
+        let height = 0;
+        let id = setInterval(slideDown, 1);
+        function slideDown() {
+            navBarOpened.style.display = "block";
+            navBarOpened.setAttribute("data-visibility", "true");
+            if (height >= 500) {
+                clearInterval(id);
+            } else {
+                height += 3;
+                navBarOpened.style.height = height + 'px';
+            }
+        }
+    }
+}
+
+function navBurgerClose() {
+    if (navBarOpened.getAttribute("data-visibility") === "true") {
+        let height = 500;
+        let id = setInterval(slideUp, 1);
+        function slideUp() {
+            navBarOpened.setAttribute("data-visibility", "false");
+            if (height <= 0) {
+                navBarOpened.style.display = "none";
+                clearInterval(id);
+            } else {
+                height -= 3;
+                navBarOpened.style.height = height + 'px';
+            }
+        }
+    }
+}
 
 
-slider.addEventListener("mouseout", sliderOutListener);
+picturesBackground.addEventListener("mouseover", picturesMouseOverListener);
+
+
+slider.addEventListener("mouseleave", sliderOutListener);
 
 
 leftButton.addEventListener("click", leftClickListener);
 
 
 rightButton.addEventListener("click", rightClickListener);
+
+
+
+navBurger.addEventListener("click", navBurgerOpen);
+navBurger.addEventListener("click", navBurgerClose);
