@@ -68,7 +68,7 @@ public class ProductController extends HttpServlet {
 
     }
 
-    @Override
+    /*@Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         OrderDao orderDataStore = OrderDaoMem.getInstance();
@@ -80,5 +80,5 @@ public class ProductController extends HttpServlet {
 
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(Integer.toString(numOfProducts));
-    }
+    }*/
 }

@@ -30,9 +30,7 @@ public class ProductCategory extends BaseModel {
         return this.products;
     }
 
-    public void addProduct(Product product) {
-        this.products.add(product);
-    }
+
 
     public String toString() {
         return String.format(
@@ -44,5 +42,9 @@ public class ProductCategory extends BaseModel {
                 this.name,
                 this.department,
                 this.description);
+    }
+
+    public void addProduct(Product product) {
+        this.products.add(product);
     }
 }
