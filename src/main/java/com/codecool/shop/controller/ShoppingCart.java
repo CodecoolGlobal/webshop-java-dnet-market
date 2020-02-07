@@ -32,6 +32,7 @@ public class ShoppingCart extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<OrderedItems> orderedItems = OrderDaoMem.getInstance().getAll();
         OrderDaoMem orderedItemDataStore = OrderDaoMem.getInstance();
+        ProductDao productDataStore = ProductDaoMem.getInstance();
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -48,6 +49,11 @@ public class ShoppingCart extends HttpServlet {
                     orderedItemDataStore.find(Integer.valueOf(id)).decreaseAmount();
                     break;
             }
+        }
+        String productFromCart = req.getParameter("product");
+        if(productFromCart != null){
+            int productID = parseInt(productFromCart);
+            orderedItemDataStore.remove(productID);
         }
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();

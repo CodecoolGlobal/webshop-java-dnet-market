@@ -34,7 +34,7 @@ public class OrderDaoMem extends Database implements OrderDao {
     public float getPriceForAll() {
         int summ = 0;
         for (OrderedItems orderedItem: data) {
-            summ += orderedItem.getProduct().getFloatPrice();
+            summ += orderedItem.getProduct().getFloatPrice()*orderedItem.getAmount();
         }
         return summ;
     }
