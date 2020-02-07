@@ -7,8 +7,8 @@ public class Database {
 
     static final String DB_URL = "jdbc:postgresql://localhost:5432/codecoolshop";
     //  Database credentials
-    static final String USER = "kruppa";
-    static final String PASS = "new_password";
+    static final String USER = "YOUR URERNAME";
+    static final String PASS = "YOUR PASSWORD";
     static Connection conn;
     static Statement stmt;
 
